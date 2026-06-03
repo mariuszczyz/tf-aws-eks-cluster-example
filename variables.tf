@@ -1,5 +1,20 @@
+# =============================================================================
+# Root module variables
+# =============================================================================
+# Variables are grouped into four buckets:
+#
+#   1. Identity / region        — name, aws_region, cluster_name
+#   2. Networking               — vpc_cidr, azs, use_private_subnets
+#   3. Compute                  — instance_types, min/max/desired_size, labels, taints
+#   4. Feature toggles          — create_* (per-layer kill switches) and enable_*
+#                                 (per-addon switches)
+#
+# Every `create_*` and `enable_*` boolean has a safe default so a bare
+# `terraform apply` produces a working cluster.
+# =============================================================================
+
 variable "create" {
-  description = "Controls if all resources should be created"
+  description = "Master kill switch. Currently informational — child modules are toggled with create_vpc / create_iam / create_cluster / create_node_groups / create_addons."
   type        = bool
   default     = true
 }

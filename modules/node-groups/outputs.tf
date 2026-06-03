@@ -1,3 +1,9 @@
+# =============================================================================
+# Module: node-groups — outputs
+# =============================================================================
+# All wrapped in try() so the module is safe to reference when create=false.
+# =============================================================================
+
 output "node_group_arn" {
   description = "ARN of the node group"
   value       = try(aws_eks_node_group.main[0].arn, "")

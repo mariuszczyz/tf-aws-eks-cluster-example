@@ -1,3 +1,16 @@
+# =============================================================================
+# Module: node-groups — inputs
+# =============================================================================
+# Identity: cluster_name (the EKS cluster to attach to), node_iam_role_arn.
+# Compute:  instance_types (list — enables multi-instance / spot diversification),
+#           ami_type (AL2_x86_64, BOTTLEROCKET_x86_64, AL2_ARM_64, …),
+#           release_version (pin a specific AMI; "" means latest GA),
+#           disk_size (root volume GB).
+# Scaling:  min_size / max_size / desired_size.
+# Updates:  update_config — at most one of max_unavailable / max_unavailable_percentage.
+# Workload: labels, taints (NO_SCHEDULE / NO_EXECUTE / PREFER_NO_SCHEDULE).
+# =============================================================================
+
 variable "create" {
   description = "Controls if node group resources should be created"
   type        = bool
@@ -102,4 +115,14 @@ variable "tags" {
   description = "Additional tags for resources"
   type        = map(string)
   default     = {}
+}
+
+# Synthetic ordering input — same pattern as in the cluster module. Pass
+# module.iam.node_role_policies_ready so node-group creation waits for the
+# kubelet/CNI/EC2 policy attachments. Avoids EKS NodeCreationFailure when
+# kubelet tries to register before its IAM auth is fully wired.
+variable "iam_role_policies_ready" {
+  description = "List of IAM policy attachment IDs to wait on (use module.iam.node_role_policies_ready)"
+  type        = list(string)
+  default     = []
 }

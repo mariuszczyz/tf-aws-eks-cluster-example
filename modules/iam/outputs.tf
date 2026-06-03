@@ -1,3 +1,12 @@
+# =============================================================================
+# Module: iam — outputs
+# =============================================================================
+# Role ARNs are wrapped in try() so they're safe to reference when create=false.
+# `cluster_role_policies_ready` / `node_role_policies_ready` are *ordering*
+# outputs — depend on these (not the role ARN) to guarantee that the policy
+# attachments exist before downstream resources are created.
+# =============================================================================
+
 output "cluster_iam_role_arn" {
   description = "ARN of the EKS cluster IAM role"
   value       = try(aws_iam_role.cluster[0].arn, "")

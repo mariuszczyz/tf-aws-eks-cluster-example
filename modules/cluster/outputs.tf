@@ -1,3 +1,12 @@
+# =============================================================================
+# Module: cluster — outputs
+# =============================================================================
+# `cluster_oidc_issuer_url` is the key output for IRSA — pass it back to the
+# iam module so it can register the OIDC provider.
+# `cluster_security_group_id` is the EKS-managed control-plane SG; the addons
+# / future LB / VPN modules typically need to allow traffic from it.
+# =============================================================================
+
 output "cluster_endpoint" {
   description = "EKS cluster endpoint"
   value       = try(aws_eks_cluster.main[0].endpoint, "")

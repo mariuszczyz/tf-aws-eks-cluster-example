@@ -1,3 +1,11 @@
+# =============================================================================
+# Root module outputs
+# =============================================================================
+# All outputs are wrapped in `try(..., "" / [])` so consumers can still plan
+# against this module when child layers are disabled (e.g. create_cluster=false).
+# Outputs pass through to the corresponding submodule output.
+# =============================================================================
+
 output "cluster_endpoint" {
   description = "EKS cluster endpoint"
   value       = try(module.cluster.cluster_endpoint, "")

@@ -1,3 +1,12 @@
+# =============================================================================
+# Module: addons — outputs
+# =============================================================================
+# Three views of the created addons:
+#   addons       — full resource map (for advanced consumers).
+#   addon_names  — list of created addon names (handy for asserts / dashboards).
+#   addon_arns   — name → ARN map (for IAM resource conditions, etc).
+# =============================================================================
+
 output "addons" {
   description = "Map of created addon resources"
   value       = aws_eks_addon.main

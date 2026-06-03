@@ -1,3 +1,15 @@
+# =============================================================================
+# Module: iam — inputs
+# =============================================================================
+# Three categories:
+#   - Identity:   name, cluster_name, region.
+#   - Policies:   kubelet_/cni_/ec2_iam_policy — the three node attachments.
+#                 Defaults are the AWS-managed policies EKS expects.
+#   - OIDC/IRSA:  oidc_provider_url (from cluster), oidc_provider_arn (if a
+#                 provider already exists outside this module),
+#                 create_irsa_roles + irsa_roles for per-workload roles.
+# =============================================================================
+
 variable "create" {
   description = "Controls if IAM resources should be created"
   type        = bool

@@ -1,3 +1,12 @@
+# =============================================================================
+# Module: vpc — outputs
+# =============================================================================
+# Outputs are tolerant of `create=false` / `use_existing_vpc=true`:
+#   - Scalar outputs fall back to "" via try() when the resource has count=0.
+#   - List outputs return [] when no subnets / NAT gateways were created.
+# Callers should treat empty values as "this layer was disabled".
+# =============================================================================
+
 output "vpc_id" {
   description = "The ID of the VPC"
   value       = var.use_existing_vpc ? var.existing_vpc_id : try(aws_vpc.main[0].id, "")

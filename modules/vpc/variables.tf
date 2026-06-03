@@ -1,3 +1,13 @@
+# =============================================================================
+# Module: vpc — inputs
+# =============================================================================
+# - `create`            kill switch for the whole module.
+# - `use_existing_vpc`  pass-through mode: reuse caller-supplied VPC/subnets
+#                       and skip all aws_vpc / aws_subnet / aws_nat_* resources.
+# - NAT controls        enable_nat_gateway + single_nat_gateway. Default is
+#                       single shared NAT (cheaper) — flip to false for prod HA.
+# =============================================================================
+
 variable "create" {
   description = "Controls if VPC resources should be created"
   type        = bool

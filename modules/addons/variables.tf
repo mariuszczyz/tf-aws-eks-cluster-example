@@ -1,3 +1,12 @@
+# =============================================================================
+# Module: addons — inputs
+# =============================================================================
+# One `enable_<addon>` boolean per supported addon. Optional `*_version` strings
+# pin a specific addon version ("" = latest compatible). VPC CNI and CoreDNS
+# also accept a `*_configuration` map that gets JSON-encoded into the addon's
+# `configuration_values`.
+# =============================================================================
+
 variable "create" {
   description = "Controls if addon resources should be created"
   type        = bool

@@ -1,3 +1,16 @@
+# =============================================================================
+# Module: cluster — inputs
+# =============================================================================
+# Required: vpc_id, subnet_ids, cluster_iam_role_arn (from iam module).
+# Optional: node_security_group_id (enables cluster→node SG rules), eks_version,
+# cluster_encryption_config (KMS envelope encryption for k8s Secrets).
+#
+# The enable_* / *_version variables and vpc_cni_/kubelet_/ec2_iam_policy
+# variables are legacy passthroughs from when this module also created addons
+# and IAM. They are unused in current code but kept for API stability — remove
+# in a future major version.
+# =============================================================================
+
 variable "create" {
   description = "Controls if EKS cluster resources should be created"
   type        = bool
@@ -110,4 +123,14 @@ variable "tags" {
   description = "Additional tags for resources"
   type        = map(string)
   default     = {}
+}
+
+# Synthetic ordering input. Pass module.iam.cluster_role_policies_ready here so
+# Terraform creates the IAM policy attachments BEFORE the cluster — avoids the
+# "role not authorized" race without taking a wide module-level depends_on
+# (which would form a cycle with the OIDC URL flowing back into iam).
+variable "iam_role_policies_ready" {
+  description = "List of IAM policy attachment IDs the cluster should wait on (use module.iam.cluster_role_policies_ready)"
+  type        = list(string)
+  default     = []
 }
