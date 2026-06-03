@@ -50,6 +50,12 @@ variable "node_security_group_id" {
   default     = ""
 }
 
+variable "create_node_security_group_rules" {
+  description = "Whether to create the cluster→node SG ingress rules. Must be known at plan time (cannot depend on unknown values like SG IDs computed during apply)."
+  type        = bool
+  default     = true
+}
+
 variable "vpc_cni_iam_policy" {
   description = "IAM policy ARN for VPC CNI"
   type        = string

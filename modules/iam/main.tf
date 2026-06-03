@@ -112,7 +112,7 @@ resource "aws_iam_role_policy_attachment" "node" {
 # AWS requires when registering the OIDC provider. Only runs when an OIDC
 # issuer URL is known (i.e. the cluster has been created).
 data "tls_certificate" "eks" {
-  count = var.create && var.oidc_provider_url != "" ? 1 : 0
+  count = var.create && var.create_oidc_provider ? 1 : 0
 
   url = var.oidc_provider_url
 }
@@ -121,7 +121,7 @@ data "tls_certificate" "eks" {
 # a pre-existing `oidc_provider_arn` (e.g. another module already created one)
 # or when no URL is available yet.
 resource "aws_iam_openid_connect_provider" "eks" {
-  count = var.create && var.oidc_provider_arn == "" && var.oidc_provider_url != "" ? 1 : 0
+  count = var.create && var.create_oidc_provider && var.oidc_provider_arn == "" ? 1 : 0
 
   client_id_list  = ["sts.amazonaws.com"]
   thumbprint_list = try(data.tls_certificate.eks[0].certificates[*].sha1_fingerprint, [])

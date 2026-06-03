@@ -45,6 +45,12 @@ variable "oidc_provider_url" {
   default     = ""
 }
 
+variable "create_oidc_provider" {
+  description = "Whether to fetch the cluster OIDC TLS cert and register an IAM OIDC provider. Must be known at plan time (cannot depend on apply-time values like the cluster's issuer URL)."
+  type        = bool
+  default     = true
+}
+
 variable "kubelet_iam_policy" {
   description = "IAM policy ARN for kubelet"
   type        = string

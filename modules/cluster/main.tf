@@ -85,7 +85,7 @@ resource "aws_eks_cluster" "main" {
 # We can only emit these rules AFTER the cluster exists, since the source SG
 # is the EKS-managed `cluster_security_group_id`.
 resource "aws_vpc_security_group_ingress_rule" "cluster_to_node_kubelet" {
-  count = var.create && var.node_security_group_id != "" ? 1 : 0
+  count = var.create && var.create_node_security_group_rules ? 1 : 0
 
   security_group_id            = var.node_security_group_id
   referenced_security_group_id = aws_eks_cluster.main[0].vpc_config[0].cluster_security_group_id
@@ -96,7 +96,7 @@ resource "aws_vpc_security_group_ingress_rule" "cluster_to_node_kubelet" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "cluster_to_node_https" {
-  count = var.create && var.node_security_group_id != "" ? 1 : 0
+  count = var.create && var.create_node_security_group_rules ? 1 : 0
 
   security_group_id            = var.node_security_group_id
   referenced_security_group_id = aws_eks_cluster.main[0].vpc_config[0].cluster_security_group_id
