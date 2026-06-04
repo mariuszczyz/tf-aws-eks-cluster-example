@@ -144,6 +144,7 @@ Outputs (`vpc_id`, `public_subnet_ids`, `private_subnet_ids`) pass through trans
 
 - [examples/basic](examples/basic/) — minimal cluster, default VPC, single node group
 - [examples/production](examples/production/) — KMS-encrypted secrets, multiple node groups, full addon suite
+- [examples/production-existing-vpc](examples/production-existing-vpc/) — production cluster deployed into a pre-existing VPC (subnets discovered by tag)
 - [examples/multi-cluster](examples/multi-cluster/) — multiple clusters in different regions
 
 ## Inputs (root)
